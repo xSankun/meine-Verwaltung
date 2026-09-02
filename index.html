@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f766e"><meta name="description" content="Private lokale Anwesenheitsverwaltung">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
+<title>Meine Verwaltung V16 Offline</title>
+<style>
+:root{--teal:#0f766e;--teal2:#115e59;--bg:#f5f7f8;--card:#fff;--text:#17202a;--muted:#64748b;--line:#e2e8f0;--green:#16a34a;--red:#dc2626;--amber:#b45309}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.sidebar{width:235px;background:#fff;border-right:1px solid var(--line);padding:22px 14px;position:fixed;inset:0 auto 0 0;z-index:12}.brand{font-weight:800;font-size:18px;padding:0 12px 26px;color:var(--teal)}.brand span{display:block;font-size:11px;color:var(--muted);font-weight:500;margin-top:3px}
+.nav button{width:100%;background:transparent;color:#475569;text-align:left;margin:3px 0;padding:12px;border-radius:10px}.nav button.active,.nav button:hover{background:#ecfdf5;color:var(--teal);font-weight:650}
+.main{margin-left:235px;width:calc(100% - 235px)}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:5}.topbar h1{font-size:21px;margin:0}.date{color:var(--muted);font-size:13px}.content{max-width:1250px;margin:0 auto;padding:26px 28px}
+.hero{display:flex;justify-content:space-between;gap:15px;align-items:flex-end;margin-bottom:22px}.hero h2{margin:0 0 5px;font-size:27px}.hero p{margin:0;color:var(--muted)}
+button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;background:var(--teal);color:#fff;font-weight:600}button:hover{filter:brightness(.96)}button.light{background:#f1f5f9;color:#334155}button.red{background:#fee2e2;color:#b91c1c}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 2px 12px #0f172a0b}.stat .label{font-size:13px;color:var(--muted)}.stat .num{font-size:29px;font-weight:800;margin-top:5px}.stat .sub{font-size:12px;color:var(--muted);margin-top:5px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 12px #0f172a0b;overflow:hidden}.panelhead{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.panelhead h3{margin:0;font-size:16px}.panelbody{padding:16px}
+.search{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit;margin-bottom:12px}
+.person{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #eef2f7}.person:last-child{border-bottom:0}.avatar{width:42px;height:42px;border-radius:12px;background:#ccfbf1;color:var(--teal);display:grid;place-items:center;font-weight:800}.name{font-weight:700}.name.click{cursor:pointer}.name.click:hover{text-decoration:underline}.meta{font-size:12px;color:var(--muted);margin-top:3px}.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;font-size:12px;font-weight:700}.on{background:#dcfce7;color:#166534}.off{background:#fee2e2;color:#991b1b}.none{background:#f1f5f9;color:#64748b}.actions{margin-top:7px;display:flex;gap:5px;flex-wrap:wrap}.actions button{font-size:12px;padding:6px 8px}
+.timeline{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eef2f7}.dot{width:9px;height:9px;border-radius:50%;background:var(--teal);margin-top:5px}.timeline b{font-size:13px}.timeline span{display:block;color:var(--muted);font-size:12px;margin-top:2px}.empty{text-align:center;color:var(--muted);padding:30px 10px}
+.dataTable{width:100%;border-collapse:collapse}.dataTable th,.dataTable td{text-align:left;padding:12px 9px;border-bottom:1px solid #eef2f7;font-size:13px;vertical-align:top}.dataTable th{font-size:11px;color:var(--muted);text-transform:uppercase}.tag{display:inline-block;padding:4px 7px;margin:2px;border-radius:999px;background:#ecfdf5;color:var(--teal2);font-size:11px;font-weight:700}
+.notice{background:#ecfdf5;border:1px solid #a7f3d0;color:#166534;padding:11px;border-radius:10px;font-size:12px;margin-bottom:16px}
+.weekOuter{overflow:auto;border:1px solid var(--line);border-radius:12px}.weekgrid{display:grid;grid-template-columns:minmax(180px,1.5fr) repeat(7,minmax(118px,1fr));min-width:1010px;background:#fff}.weekgrid>div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;min-height:68px}.weekHead{background:#f8fafc;font-size:11px;font-weight:800;color:#475569;position:sticky;top:0}.weekName{font-weight:700;cursor:pointer}.weekName:hover{background:#ecfdf5;color:var(--teal)}.weekCell{text-align:center;cursor:pointer}.weekCell:hover{background:#f0fdfa}.weekCell .time{font-size:10px;color:var(--muted);margin-top:4px}.weekHint{font-size:11px;color:var(--muted);margin-top:10px}
+.mobilebar{display:none}.hidden{display:none!important}
+.overlay{position:fixed;inset:0;background:#0f172a88;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}.modal{width:min(720px,95vw);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 25px 80px #0003}.modalBody{padding:22px}.modalHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.infoCard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.infoLabel{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}.infoValue{margin-top:3px;word-break:break-word}.parentCard{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:13px}.parentCard b{display:block;margin-bottom:5px}.phone{display:inline-block;margin-top:7px;color:var(--teal);text-decoration:none;font-weight:700}
+.form{padding:22px}.form h2{margin:0 0 18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}.sectionTitle{grid-column:1/-1;font-weight:800;font-size:14px;margin-top:5px;color:var(--teal);border-bottom:1px solid var(--line);padding-bottom:5px}.formfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.contactPair{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px}.checkGroup{display:flex;gap:9px;flex-wrap:wrap}.check{display:flex!important;align-items:center;gap:7px;background:#f8fafc;border:1px solid var(--line);padding:9px 11px;border-radius:9px;font-size:13px!important}.check input{width:auto!important;margin:0}.statusChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.statusChoices label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:10px}
+@media(max-width:850px){.sidebar{display:none}.main{margin-left:0;width:100%;padding-bottom:70px}.topbar{padding:0 16px}.content{padding:18px 14px}.hero{align-items:flex-start;flex-direction:column}.hero h2{font-size:23px}.stats{grid-template-columns:repeat(2,1fr)}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:7px}.mobilebar button{background:transparent;color:#64748b;font-size:11px;padding:4px}.mobilebar button.active{color:var(--teal)}}
+@media(max-width:600px){.person{grid-template-columns:38px 1fr}.person>.badge{grid-column:2;justify-self:start}.fields,.detailGrid,.contactPair{grid-template-columns:1fr}.field.full,.sectionTitle,.contactPair{grid-column:auto}.statusChoices{grid-template-columns:1fr}.dataTable{min-width:760px}.tableScroll{overflow:auto}.topbar{height:64px}.topbar h1{font-size:18px}}
+
+/* V12: V10-artige Anwesenheitskarten und Kontakt-Overlay, V5-Farben bleiben erhalten */
+#peopleList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#peopleList .person{border:1px solid var(--line);border-radius:16px;padding:13px;background:#fff;box-shadow:0 2px 8px #0f172a08;grid-template-columns:44px 1fr auto}
+#peopleList .person:last-child{border-bottom:1px solid var(--line)}
+#peopleList .avatar{border-radius:50%;width:44px;height:44px}
+#peopleList .actions{margin-top:8px}
+#peopleList .actions button{border-radius:10px}
+#peopleList .badge{align-self:start}
+.overlay{backdrop-filter:blur(6px)}
+.modal{border-radius:24px}
+.modalBody{padding:22px}
+.v10Head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.v10Hero{display:flex;align-items:center;gap:13px;margin-top:10px}
+.v10Avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#ccfbf1;color:var(--teal);font-size:18px;font-weight:800;flex:none}
+.v10Section{margin-top:17px}
+.v10Section h3{margin:0 0 9px;font-size:14px;color:var(--teal)}
+.v10Grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v10Info{background:#f8fafc;border:1px solid var(--line);border-radius:13px;padding:11px}
+.v10Info .k{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:4px}
+.v10Info .v{font-weight:650;word-break:break-word}
+.v10Parents{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v10Parent{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+.v10Parent strong{display:block;margin-bottom:5px}
+.v10Footer{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:900px){#peopleList{grid-template-columns:1fr}}
+@media(max-width:600px){.v10Grid,.v10Parents{grid-template-columns:1fr}#peopleList .person{grid-template-columns:42px 1fr}#peopleList .person>.badge{grid-column:2}}
+
+</style>
+</head>
+<body>
+<aside class="sidebar"><div class="brand">● Meine Verwaltung<span>IPHONE · LOKAL</span></div><div class="nav">
+<button id="navPresence" class="active" onclick="showTab('presence')">▦ &nbsp; Anwesenheit + Woche</button>
+<button id="navData" onclick="showTab('data')">👤 &nbsp; Personendaten</button>
+<button onclick="exportData()">⇩ &nbsp; Backup</button><button onclick="document.getElementById('importFile').click()">⇧ &nbsp; Import</button>
+</div></aside>
+<main class="main">
+<div class="card" style="margin-top:14px">
+  <div style="font-weight:800;margin-bottom:6px">🔒 Lokale Datenspeicherung</div>
+  <div class="muted" style="line-height:1.45">
+    Personen-, Kontakt-, Modul- und Anwesenheitsdaten werden ausschließlich lokal auf diesem Gerät gespeichert.
+    Diese App sendet keine eingegebenen Daten an GitHub oder andere Server.
+  </div>
+</div>
+<div class="topbar"><h1 id="pageTitle">Anwesenheit</h1><div class="date" id="date"></div></div><div class="content">
+
+<section id="presenceTab">
+<div class="hero"><div><h2>Guten Tag 👋</h2><p>Heutige Anwesenheit und direkter Zugriff auf Kontaktdaten.</p></div><button onclick="openNew()">＋ Person hinzufügen</button></div>
+<div class="stats"><div class="stat"><div class="label">ANWESEND</div><div class="num" style="color:var(--green)" id="presentCount">0</div><div class="sub">Heute</div></div><div class="stat"><div class="label">ABWESEND</div><div class="num" style="color:var(--red)" id="absentCount">0</div><div class="sub">Heute</div></div><div class="stat"><div class="label">GESAMT</div><div class="num" id="totalCount">0</div><div class="sub">Personen</div></div><div class="stat"><div class="label">LETZTER EINTRAG</div><div class="num" style="font-size:22px" id="lastTime">—</div><div class="sub">Heute</div></div></div>
+<div class="panel"><div class="panelhead"><h3>Heutige Anwesenheit</h3><span class="date" id="today"></span></div><div class="panelbody"><input class="search" id="search" placeholder="🔎 Person suchen…" oninput="renderPresence()"><div id="peopleList"></div></div></div>
+<div class="panel" style="margin-top:16px"><div class="panelhead"><h3>Aktivitäten heute</h3></div><div class="panelbody" id="timeline"></div></div>
+
+<div class="hero" style="margin-top:28px"><div><h2 style="font-size:22px">Wochenübersicht</h2><p>Direkt unter der Anwesenheit · Tageszelle antippen zum Nachtragen oder Korrigieren.</p></div><div><button class="light" onclick="moveWeek(-7)">← Woche</button> <button class="light" onclick="moveWeek(0)">Heute</button> <button class="light" onclick="moveWeek(7)">Woche →</button></div></div>
+<div class="panel"><div class="panelhead"><h3 id="weekTitle">Woche</h3><span class="date">Zelle antippen zum Nachtragen</span></div><div class="panelbody"><div id="weekContent"></div></div></div>
+</section>
+
+<section id="dataTab" class="hidden">
+<div class="hero"><div><h2>Personendaten</h2><p>Kontakte, Betreuung, Vertrag und Integration übersichtlich zusammengefasst.</p></div><button onclick="openNew()">＋ Person hinzufügen</button></div>
+<div class="notice">📱 Diese Version speichert die Daten lokal auf diesem Gerät. Für PC-Nachträge kannst du jederzeit ein JSON-Backup exportieren, am PC bearbeiten und wieder importieren.</div>
+<div class="panel"><div class="panelbody"><div id="dataContent"></div></div></div>
+</section>
+</div></main>
+
+<div class="mobilebar"><button id="mPresence" class="active" onclick="showTab('presence')">▦<br>Anwesenheit</button><button id="mData" onclick="showTab('data')">👤<br>Daten</button><button onclick="openNew()">＋<br>Person</button><button onclick="exportData()">⇩<br>Backup</button><button onclick="document.getElementById('importFile').click()">⇧<br>Import</button></div>
+<input hidden id="importFile" type="file" accept=".json" onchange="importData(event)">
+
+<div id="personOverlay" class="overlay hidden" onclick="if(event.target===this)closePersonOverlay()"><div class="modal"><div class="modalBody" id="personDetails"></div></div></div>
+
+<div id="personFormOverlay" class="overlay hidden" onclick="if(event.target===this)closePersonForm()"><div class="modal">
+<div class="form"><div class="modalHead"><h2 id="formTitle">Person hinzufügen</h2><button type="button" class="light" onclick="closePersonForm()">✕</button></div>
+<input type="hidden" id="f_id"><div class="fields">
+<div class="sectionTitle">Persönliche Daten</div>
+<div class="field"><label>VORNAME *</label><input id="f_first"></div><div class="field"><label>NACHNAME *</label><input id="f_last"></div>
+<div class="field"><label>GEBURTSDATUM</label><input id="f_birth" type="date"></div><div class="field"><label>ADRESSE</label><input id="f_address"></div>
+<div class="field"><label>PLZ / ORT</label><input id="f_city"></div><div class="field"><label>KURZE NOTIZ</label><input id="f_notes"></div>
+
+<div class="sectionTitle">Eltern / Erziehungsberechtigte</div>
+<div class="contactPair"><div class="field"><label>ELTERNTEIL 1 – NAME</label><input id="f_parent1"></div><div class="field"><label>TELEFON ELTERNTEIL 1</label><input id="f_parent1phone" inputmode="tel"></div></div>
+<div class="contactPair"><div class="field"><label>ELTERNTEIL 2 – NAME</label><input id="f_parent2"></div><div class="field"><label>TELEFON ELTERNTEIL 2</label><input id="f_parent2phone" inputmode="tel"></div></div>
+
+<div class="sectionTitle">Betreuung / Unterricht</div>
+<div class="field full"><label>RELIGION / LEBENSKUNDE</label><div class="checkGroup">
+<label class="check"><input type="checkbox" id="f_religion"> Religion</label>
+<label class="check"><input type="checkbox" id="f_lebenskunde"> Lebenskunde</label>
+</div></div>
+<div class="field full"><label>VERTRAGSMODULE</label><div class="checkGroup">
+<label class="check"><input type="checkbox" class="module" value="VHG"> VHG</label>
+<label class="check"><input type="checkbox" class="module" value="16"> 16</label>
+<label class="check"><input type="checkbox" class="module" value="6-16"> 6–16</label>
+<label class="check"><input type="checkbox" class="module" value="6-18"> 6–18</label>
+<label class="check"><input type="checkbox" class="module" value="18"> 18</label>
+</div></div>
+<div class="field full"><label>INTEGRATION</label><div class="checkGroup"><label class="check"><input type="checkbox" id="f_integration"> Integration vorhanden</label></div></div>
+
+<div class="sectionTitle">🚨 Notfallkontakte</div>
+<div class="contactPair"><div class="field"><label>NOTFALLKONTAKT 1 – NAME</label><input id="f_emergency1"></div><div class="field"><label>TELEFON</label><input id="f_emergency1phone" inputmode="tel"></div></div>
+<div class="contactPair"><div class="field"><label>NOTFALLKONTAKT 2 – NAME</label><input id="f_emergency2"></div><div class="field"><label>TELEFON</label><input id="f_emergency2phone" inputmode="tel"></div></div>
+<div class="field full"><label>WEITERE NOTIZEN</label><textarea id="f_moreNotes" rows="3"></textarea></div>
+</div>
+<div class="formfoot"><button type="button" class="red" id="deleteBtn" onclick="deleteCurrent()">Löschen</button><button type="button" class="light" onclick="closePersonForm()">Abbrechen</button><button type="button" onclick="savePerson()">Speichern</button></div></div>
+</div></div>
+
+<div id="weekEditOverlay" class="overlay hidden" onclick="if(event.target===this)closeWeekEdit()"><div class="modal" style="width:min(520px,95vw)"><div class="form">
+<div class="modalHead"><div><h2 style="margin:0">Anwesenheit nachtragen</h2><div class="date" id="weekEditSubtitle"></div></div><button type="button" class="light" onclick="closeWeekEdit()">✕</button></div>
+<input type="hidden" id="we_pid"><input type="hidden" id="we_date">
+<div class="fields" style="margin-top:18px">
+<div class="field full"><label>STATUS</label><div class="statusChoices">
+<label><input type="radio" name="we_status" value="present"> Anwesend</label>
+<label><input type="radio" name="we_status" value="absent"> Abwesend</label>
+<label><input type="radio" name="we_status" value="none"> Kein Eintrag</label>
+</div></div>
+<div class="field"><label>ANKUNFT</label><input id="we_arrival" type="time"></div><div class="field"><label>ABGANG</label><input id="we_departure" type="time"></div>
+</div>
+<div class="formfoot"><button type="button" class="light" onclick="closeWeekEdit()">Abbrechen</button><button type="button" onclick="saveWeekEdit()">Speichern</button></div>
+</div></div></div>
+
+<script>
+const DB_NAME="meine_verwaltung_v16_db";const STORE="state";const STATE_KEY="main";let S={persons:[]},currentTab="presence",weekOffset=0;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const makeId=()=>Date.now().toString(36)+"_"+Math.random().toString(36).slice(2);
+const localDateKey=(d=new Date())=>{let y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0"),da=String(d.getDate()).padStart(2,"0");return `${y}-${m}-${da}`};
+const todayKey=()=>localDateKey();
+const now=()=>new Date().toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+const fullName=p=>[p.first,p.last].filter(Boolean).join(" ");
+const initials=p=>((p.first||" ")[0]+(p.last||" ")[0]).trim().toUpperCase()||"?";
+const rec=(p,d=todayKey())=>p.attendance?.[d];
+const fmtDate=d=>new Intl.DateTimeFormat("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date(d+"T12:00:00"));
+const shortDate=d=>new Intl.DateTimeFormat("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"}).format(new Date(d+"T12:00:00"));
+
+
+function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE))r.result.createObjectStore(STORE)};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function dbGet(){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,"readonly"),r=tx.objectStore(STORE).get(STATE_KEY);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function dbPut(v){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,"readwrite");tx.objectStore(STORE).put(v,STATE_KEY);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error)})}
+async function load(){
+  try{const v=await dbGet();if(v)S=v}catch(e){
+    try{const cached=localStorage.getItem("meine_verwaltung_v16_fallback");if(cached)S=JSON.parse(cached)}catch(_){}
+  }
+  if(!S||!Array.isArray(S.persons))S={persons:[]};
+  S.persons.forEach(normalizePerson);
+  renderAll();
+}
+function normalizePerson(p){p.attendance??={};p.modules=Array.isArray(p.modules)?p.modules:[];p.religion=!!p.religion;p.lebenskunde=!!p.lebenskunde;p.integration=!!p.integration}
+async function persist(){
+  try{await dbPut(S)}
+  catch(e){
+    try{localStorage.setItem("meine_verwaltung_v16_fallback",JSON.stringify(S))}
+    catch(_){alert("Die Daten konnten auf diesem Gerät nicht gespeichert werden.")}
+  }
+}
+
+
+function showTab(tab){
+ currentTab=tab;
+ ["presence","data"].forEach(t=>$(t+"Tab").classList.toggle("hidden",t!==tab));
+ $("navPresence").classList.toggle("active",tab==="presence");$("navData").classList.toggle("active",tab==="data");
+ $("mPresence").classList.toggle("active",tab==="presence");$("mData").classList.toggle("active",tab==="data");
+ $("pageTitle").textContent=tab==="presence"?"Anwesenheit + Wochenübersicht":"Personendaten";
+ if(tab==="presence"){renderPresence();renderWeek()}if(tab==="data")renderData()
+}
+function renderAll(){$("date").textContent=new Date().toLocaleDateString("de-DE",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});renderPresence();renderWeek();renderData()}
+function renderPresence(){
+ let q=($("search").value||"").toLowerCase(),d=todayKey(),list=S.persons.filter(p=>fullName(p).toLowerCase().includes(q));
+ let present=S.persons.filter(p=>rec(p,d)?.status==="present").length, absent=S.persons.filter(p=>rec(p,d)?.status==="absent").length;
+ $("presentCount").textContent=present;$("absentCount").textContent=absent;$("totalCount").textContent=S.persons.length;$("today").textContent=fmtDate(d);
+ let entries=S.persons.map(p=>rec(p,d)).filter(Boolean).sort((a,b)=>(b.updated||0)-(a.updated||0));$("lastTime").textContent=entries[0]?.lastTime||entries[0]?.departure||entries[0]?.arrival||"—";
+ $("peopleList").innerHTML=list.length?list.map(p=>{let r=rec(p,d),isOn=r?.status==="present";return `<div class="person">
+ <div class="avatar">${esc(initials(p))}</div><div><div class="name click" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}</div>
+ <div class="meta">${isOn?"Anwesend seit "+(r.arrival||"–"):r?.status==="absent"?"Abwesend"+(r.departure?" · Abgang "+r.departure:""):"Noch kein Eintrag heute"}</div>
+ <div class="actions"><button class="light" onclick="openPersonDetails('${p.id}')">Kontaktdaten</button><button class="${isOn?"red":""}" onclick="toggleToday('${p.id}')">${isOn?"Abwesend":"Anwesend"}</button></div></div>
+ <span class="badge ${isOn?"on":r?.status==="absent"?"off":"none"}">${isOn?"● Anwesend":r?.status==="absent"?"● Abwesend":"○ Offen"}</span>
+ </div>`}).join(""):`<div class="empty">Keine Personen gefunden.</div>`;
+ let acts=S.persons.map(p=>({p,r:rec(p,d)})).filter(x=>x.r).sort((a,b)=>(b.r.updated||0)-(a.r.updated||0));
+ $("timeline").innerHTML=acts.length?acts.map(x=>`<div class="timeline"><div class="dot"></div><div><b>${esc(fullName(x.p))} · ${x.r.status==="present"?"anwesend":"abwesend"}</b><span>${x.r.arrival?"Ankunft "+x.r.arrival:""}${x.r.departure?" · Abgang "+x.r.departure:""}</span></div></div>`).join(""):`<div class="empty">Heute noch keine Aktivitäten.</div>`
+}
+async function toggleToday(pid){
+ let p=S.persons.find(x=>x.id===pid);if(!p)return;
+ let d=todayKey(),r=rec(p,d),t=now();
+ if(r?.status==="present"){
+   p.attendance[d]={...r,status:"absent",departure:t,updated:Date.now(),lastTime:t};
+ }else{
+   p.attendance[d]={status:"present",arrival:t,departure:"",updated:Date.now(),lastTime:t};
+ }
+ await persist();renderAll()
+}
+
+function mondayOfWeek(){
+ let d=new Date();d.setHours(12,0,0,0);let n=d.getDay(),diff=n===0?-6:1-n;d.setDate(d.getDate()+diff+weekOffset);return d
+}
+function weekDates(){let mon=mondayOfWeek();return Array.from({length:7},(_,i)=>{let x=new Date(mon);x.setDate(mon.getDate()+i);return localDateKey(x)})}
+function moveWeek(n){weekOffset=n===0?0:weekOffset+n;renderWeek()}
+function renderWeek(){
+ let ds=weekDates();$("weekTitle").textContent=`Woche ${shortDate(ds[0])} – ${shortDate(ds[6])}`;
+ if(!S.persons.length){$("weekContent").innerHTML='<div class="empty">Noch keine Personen angelegt.</div>';return}
+ let h='<div class="weekOuter"><div class="weekgrid"><div class="weekHead">Name</div>';
+ ds.forEach(d=>h+=`<div class="weekHead">${esc(shortDate(d))}</div>`);
+ S.persons.forEach(p=>{
+  h+=`<div class="weekName" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}<div class="meta">Kontaktdaten</div></div>`;
+  ds.forEach(d=>{let r=rec(p,d),cl=r?.status==="present"?"on":r?.status==="absent"?"off":"none",tx=r?.status==="present"?"Anwesend":r?.status==="absent"?"Abwesend":"Nachtragen";
+   h+=`<div class="weekCell" onclick="openWeekEdit('${p.id}','${d}')"><span class="badge ${cl}">${tx}</span><div class="time">${r?.arrival?"An "+esc(r.arrival):""}${r?.departure?" · Ab "+esc(r.departure):""}</div></div>`});
+ });h+='</div></div><div class="weekHint">Tipp: Eine Tageszelle antippen, um einen vergessenen Eintrag rückwirkend anzulegen oder zu ändern.</div>';$("weekContent").innerHTML=h
+}
+function openWeekEdit(pid,date){
+ let p=S.persons.find(x=>x.id===pid);if(!p)return;let r=rec(p,date);
+ $("we_pid").value=pid;$("we_date").value=date;$("weekEditSubtitle").textContent=`${fullName(p)} · ${fmtDate(date)}`;
+ let st=r?.status||"none";document.querySelectorAll('input[name="we_status"]').forEach(x=>x.checked=x.value===st);
+ $("we_arrival").value=r?.arrival||"";$("we_departure").value=r?.departure||"";$("weekEditOverlay").classList.remove("hidden")
+}
+function closeWeekEdit(){$("weekEditOverlay").classList.add("hidden")}
+async function saveWeekEdit(){
+ let pid=$("we_pid").value,date=$("we_date").value,p=S.persons.find(x=>x.id===pid);if(!p)return;
+ let status=document.querySelector('input[name="we_status"]:checked')?.value||"none";
+ if(status==="none")delete p.attendance[date];
+ else p.attendance[date]={status,arrival:$("we_arrival").value,departure:$("we_departure").value,updated:Date.now(),lastTime:now()};
+ await persist();closeWeekEdit();renderAll()
+}
+
+function openNew(){
+ fillForm({id:makeId(),first:"",last:"",birth:"",address:"",city:"",notes:"",parent1:"",parent1phone:"",parent2:"",parent2phone:"",religion:false,lebenskunde:false,modules:[],integration:false,emergency1:"",emergency1phone:"",emergency2:"",emergency2phone:"",moreNotes:"",attendance:{}},true)
+}
+function editPerson(pid){let p=S.persons.find(x=>x.id===pid);if(p){closePersonOverlay();fillForm(p,false)}}
+function fillForm(p,isNew){
+ $("formTitle").textContent=isNew?"Person hinzufügen":"Person bearbeiten";$("deleteBtn").classList.toggle("hidden",isNew);
+ ["id","first","last","birth","address","city","notes","parent1","parent1phone","parent2","parent2phone","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>$("f_"+k).value=p[k]||"");
+ $("f_religion").checked=!!p.religion;$("f_lebenskunde").checked=!!p.lebenskunde;$("f_integration").checked=!!p.integration;
+ document.querySelectorAll(".module").forEach(x=>x.checked=(p.modules||[]).includes(x.value));
+ $("personFormOverlay").classList.remove("hidden")
+}
+function closePersonForm(){$("personFormOverlay").classList.add("hidden")}
+async function savePerson(){
+ let id=$("f_id").value,p=S.persons.find(x=>x.id===id);if(!p){p={id,attendance:{}};S.persons.push(p)}
+ ["first","last","birth","address","city","notes","parent1","parent1phone","parent2","parent2phone","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>p[k]=$("f_"+k).value.trim());
+ if(!p.first&&!p.last){alert("Bitte mindestens einen Namen eingeben.");return}
+ p.religion=$("f_religion").checked;p.lebenskunde=$("f_lebenskunde").checked;p.integration=$("f_integration").checked;p.modules=[...document.querySelectorAll(".module:checked")].map(x=>x.value);p.attendance??={};
+ await persist();closePersonForm();renderAll()
+}
+async function deleteCurrent(){let id=$("f_id").value;if(!confirm("Person wirklich löschen?"))return;S.persons=S.persons.filter(p=>p.id!==id);await persist();closePersonForm();renderAll()}
+
+function tagsFor(p){
+ let a=[];if(p.religion)a.push("Religion");if(p.lebenskunde)a.push("Lebenskunde");(p.modules||[]).forEach(m=>a.push("Modul "+m));if(p.integration)a.push("Integration");return a
+}
+function renderData(){
+ $("dataContent").innerHTML=S.persons.length?`<div class="tableScroll"><table class="dataTable"><thead><tr><th>Name</th><th>Elternteil 1</th><th>Telefon 1</th><th>Elternteil 2</th><th>Telefon 2</th><th>Betreuung / Vertrag</th><th></th></tr></thead><tbody>
+ ${S.persons.map(p=>`<tr><td><b class="name click" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}</b></td><td>${esc(p.parent1||"–")}</td><td>${esc(p.parent1phone||"–")}</td><td>${esc(p.parent2||"–")}</td><td>${esc(p.parent2phone||"–")}</td><td>${tagsFor(p).map(t=>`<span class="tag">${esc(t)}</span>`).join("")||"–"}</td><td><button class="light" onclick="editPerson('${p.id}')">Bearbeiten</button></td></tr>`).join("")}
+ </tbody></table></div>`:`<div class="empty">Noch keine Personen angelegt.</div>`
+}
+function openPersonDetails(pid){
+ let p=S.persons.find(x=>x.id===pid);if(!p)return;
+ const info=(l,v)=>`<div class="v10Info"><div class="k">${l}</div><div class="v">${esc(v||"–")}</div></div>`;
+ const contact=(title,name,phone)=>`<div class="v10Parent"><strong>${title}</strong><div>${esc(name||"–")}</div>${phone?`<a class="phone" href="tel:${esc(phone)}">☎ ${esc(phone)}</a>`:'<div class="meta">Keine Telefonnummer hinterlegt</div>'}</div>`;
+ let tags=tagsFor(p);
+ $("personDetails").innerHTML=`<div class="v10Head">
+   <div class="v10Hero"><div class="v10Avatar">${esc(initials(p))}</div><div><h2 style="margin:0">${esc(fullName(p))}</h2><div class="date">Kontaktdaten & Personendaten</div></div></div>
+   <button class="light" onclick="closePersonOverlay()">Schließen</button>
+ </div>
+ <div class="v10Section"><h3>Persönliche Daten</h3><div class="v10Grid">${info("Geburtsdatum",p.birth)}${info("Adresse",p.address)}${info("PLZ / Ort",p.city)}${info("Notiz",p.notes)}</div></div>
+ <div class="v10Section"><h3>Eltern / Erziehungsberechtigte</h3><div class="v10Parents">${contact("Elternteil 1",p.parent1,p.parent1phone)}${contact("Elternteil 2",p.parent2,p.parent2phone)}</div></div>
+ <div class="v10Section"><h3>Betreuung / Vertrag</h3><div class="v10Grid">${info("Religion",p.religion?"Ja":"Nein")}${info("Lebenskunde",p.lebenskunde?"Ja":"Nein")}${info("Vertragsmodule",(p.modules||[]).join(", ")||"–")}${info("Integration",p.integration?"Ja":"Nein")}</div></div>
+ <div class="v10Section"><h3>Notfallkontakte</h3><div class="v10Parents">${contact("Notfallkontakt 1",p.emergency1,p.emergency1phone)}${contact("Notfallkontakt 2",p.emergency2,p.emergency2phone)}</div></div>
+ ${p.moreNotes?`<div class="v10Section"><h3>Weitere Notizen</h3>${info("Notizen",p.moreNotes)}</div>`:""}
+ <div class="v10Footer"><button class="light" onclick="closePersonOverlay()">Schließen</button><button onclick="editPerson('${p.id}')">Person bearbeiten</button></div>`;
+ $("personOverlay").classList.remove("hidden")
+}
+function closePersonOverlay(){$("personOverlay").classList.add("hidden")}
+
+function exportData(){let a=document.createElement("a"),b=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});a.href=URL.createObjectURL(b);a.download="verwaltung-backup-"+todayKey()+".json";a.click();URL.revokeObjectURL(a.href)}
+function importData(ev){let f=ev.target.files[0];if(!f)return;let r=new FileReader();r.onload=async()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.persons))throw Error();S=x;S.persons.forEach(normalizePerson);await persist();renderAll();alert("Backup importiert.")}catch(e){alert("Die Datei ist kein gültiges Backup.")}};r.readAsText(f);ev.target.value=""}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+load();
+</script>
+</body></html>
