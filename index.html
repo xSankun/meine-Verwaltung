@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f766e"><meta name="description" content="Private lokale Anwesenheitsverwaltung">
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
-<title>Meine Verwaltung V19 Offline</title>
+<title>Meine Verwaltung V24 Offline</title>
 <style>
 :root{--teal:#0f766e;--teal2:#115e59;--bg:#f5f7f8;--card:#fff;--text:#17202a;--muted:#64748b;--line:#e2e8f0;--green:#16a34a;--red:#dc2626;--amber:#b45309}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
@@ -20,9 +20,9 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 .timeline{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #eef2f7}.dot{width:9px;height:9px;border-radius:50%;background:var(--teal);margin-top:5px}.timeline b{font-size:13px}.timeline span{display:block;color:var(--muted);font-size:12px;margin-top:2px}.empty{text-align:center;color:var(--muted);padding:30px 10px}
 .dataTable{width:100%;border-collapse:collapse}.dataTable th,.dataTable td{text-align:left;padding:12px 9px;border-bottom:1px solid #eef2f7;font-size:13px;vertical-align:top}.dataTable th{font-size:11px;color:var(--muted);text-transform:uppercase}.tag{display:inline-block;padding:4px 7px;margin:2px;border-radius:999px;background:#ecfdf5;color:var(--teal2);font-size:11px;font-weight:700}
 .notice{background:#ecfdf5;border:1px solid #a7f3d0;color:#166534;padding:11px;border-radius:10px;font-size:12px;margin-bottom:16px}
-.weekOuter{overflow:auto;border:1px solid var(--line);border-radius:12px}.weekgrid{display:grid;grid-template-columns:minmax(180px,1.5fr) repeat(7,minmax(118px,1fr));min-width:1010px;background:#fff}.weekgrid>div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;min-height:68px}.weekHead{background:#f8fafc;font-size:11px;font-weight:800;color:#475569;position:sticky;top:0}.weekName{font-weight:700;cursor:pointer}.weekName:hover{background:#ecfdf5;color:var(--teal)}.weekCell{text-align:center;cursor:pointer}.weekCell:hover{background:#f0fdfa}.weekCell .time{font-size:10px;color:var(--muted);margin-top:4px}.weekHint{font-size:11px;color:var(--muted);margin-top:10px}
+.weekOuter{overflow:auto;border:1px solid var(--line);border-radius:12px}.weekgrid{display:grid;grid-template-columns:minmax(210px,1.6fr) repeat(5,minmax(128px,1fr));min-width:850px;background:#fff}.weekgrid>div{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px;min-height:68px}.weekHead{background:#f8fafc;font-size:11px;font-weight:800;color:#475569;position:sticky;top:0}.weekName{font-weight:700;cursor:pointer}.weekName:hover{background:#ecfdf5;color:var(--teal)}.weekCell{text-align:center;cursor:pointer}.weekCell:hover{background:#f0fdfa}.weekCell .time{font-size:10px;color:var(--muted);margin-top:4px}.weekHint{font-size:11px;color:var(--muted);margin-top:10px}.authInfo{margin-top:6px;padding:6px 7px;border-radius:8px;background:#f0fdfa;color:var(--teal2);font-size:10px;line-height:1.35}.pickupChoice.active{background:var(--teal);color:#fff;border-color:var(--teal)}
 .mobilebar{display:none}.hidden{display:none!important}
-.overlay{position:fixed;inset:0;background:#0f172a88;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}.modal{width:min(720px,95vw);max-height:92vh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 25px 80px #0003}.modalBody{padding:22px}.modalHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.infoCard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.infoLabel{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}.infoValue{margin-top:3px;word-break:break-word}.parentCard{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:13px}.parentCard b{display:block;margin-bottom:5px}.phone{display:inline-block;margin-top:7px;color:var(--teal);text-decoration:none;font-weight:700}
+.overlay{position:fixed;inset:0;background:#0f172ab8;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}.modal{width:min(720px,95vw);max-height:92vh;overflow:auto;background:#26343c;color:#e8eef1;border-radius:16px;box-shadow:0 25px 80px #0007}.modalBody{padding:22px}.modal .date,.modal .meta{color:#b8c6cc}.modal .v10Section h3,.modal .sectionTitle{color:#7dd3c7}.modal .v10Info,.modal .v10Parent,.modal .parentCard{background:#32434c;border-color:#465963}.modal .v10Info .k{color:#b8c6cc}.modal .field label{color:#dce6ea}.modal .field input,.modal .field textarea,.modal .field select{background:#f8fafc;color:#17212b}.modal .check,.modal .statusChoices label{background:#32434c;border-color:#465963;color:#e8eef1}.modalHead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.detailGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.infoCard{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.infoLabel{font-size:11px;color:var(--muted);text-transform:uppercase;font-weight:700}.infoValue{margin-top:3px;word-break:break-word}.parentCard{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:13px}.parentCard b{display:block;margin-bottom:5px}.phone{display:inline-block;margin-top:7px;color:var(--teal);text-decoration:none;font-weight:700}
 .form{padding:22px}.form h2{margin:0 0 18px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}.field input,.field textarea,.field select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}.sectionTitle{grid-column:1/-1;font-weight:800;font-size:14px;margin-top:5px;color:var(--teal);border-bottom:1px solid var(--line);padding-bottom:5px}.formfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px;flex-wrap:wrap}
 .contactPair{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px}.checkGroup{display:flex;gap:9px;flex-wrap:wrap}.check{display:flex!important;align-items:center;gap:7px;background:#f8fafc;border:1px solid var(--line);padding:9px 11px;border-radius:9px;font-size:13px!important}.check input{width:auto!important;margin:0}.statusChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.statusChoices label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:10px}
 @media(max-width:850px){.sidebar{display:none}.main{margin-left:0;width:100%;padding-bottom:70px}.topbar{padding:0 16px}.content{padding:18px 14px}.hero{align-items:flex-start;flex-direction:column}.hero h2{font-size:23px}.stats{grid-template-columns:repeat(2,1fr)}.mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;height:64px;background:#fff;border-top:1px solid var(--line);z-index:20;justify-content:space-around;padding:7px}.mobilebar button{background:transparent;color:#64748b;font-size:11px;padding:4px}.mobilebar button.active{color:var(--teal)}}
@@ -42,7 +42,7 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 .v10Head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .v10Hero{display:flex;align-items:center;gap:13px;margin-top:10px}
 .v10Avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#ccfbf1;color:var(--teal);font-size:18px;font-weight:800;flex:none}
-.v10Section{margin-top:17px}
+.v10Section{margin-top:17px}.v10Split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:17px}.v10Split .v10Section{margin-top:0}@media(max-width:600px){.v10Split{grid-template-columns:1fr}}
 .v10Section h3{margin:0 0 9px;font-size:14px;color:var(--teal)}
 .v10Grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .v10Info{background:#f8fafc;border:1px solid var(--line);border-radius:13px;padding:11px}
@@ -54,6 +54,168 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 .v10Footer{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:18px}
 @media(max-width:900px){#peopleList{grid-template-columns:1fr}}
 @media(max-width:600px){.v10Grid,.v10Parents{grid-template-columns:1fr}#peopleList .person{grid-template-columns:42px 1fr}#peopleList .person>.badge{grid-column:2}}
+
+
+/* V23: Farbpalette der Kontaktdaten global */
+:root{
+ --bg:#1b252b;
+ --card:#26343c;
+ --text:#e8eef1;
+ --muted:#b8c6cc;
+ --line:#465963;
+ --teal:#5fc9bb;
+ --teal2:#7dd3c7;
+}
+body{background:var(--bg);color:var(--text)}
+.sidebar,.topbar,.mobilebar,.card,.person,.stat,.weekOuter,.weekgrid{background:#26343c;color:#e8eef1;border-color:#465963}
+.sidebar{box-shadow:8px 0 30px #0002}
+.brand,.topbar h1,.hero h2,.person .name,.weekName{color:#e8eef1}
+.muted,.meta,.date,.weekHint,.weekCell .time,.timeline span{color:#b8c6cc!important}
+.nav button{color:#c9d5da}
+.nav button:hover,.nav button.active{background:#32434c;color:#7dd3c7}
+button.light{background:#32434c;color:#e8eef1;border:1px solid #465963}
+button.light:hover{background:#3a4d57}
+input,textarea,select{background:#32434c!important;color:#e8eef1!important;border-color:#526771!important}
+input::placeholder,textarea::placeholder{color:#91a4ad}
+.weekgrid{background:#26343c}
+.weekgrid>div{border-color:#465963}
+.weekHead{background:#32434c;color:#d6e0e4}
+.weekName:hover,.weekCell:hover{background:#30464a;color:#7dd3c7}
+.empty{color:#b8c6cc}
+.timeline{border-color:#465963}
+.dataTable th{background:#32434c;color:#d6e0e4}
+.dataTable td{border-color:#465963;color:#e8eef1}
+.tableScroll{border-color:#465963}
+.notice{background:#28413f;border-color:#3d6d67;color:#c8f3ed}
+.tag,.authInfo{background:#28413f;color:#9ee4da}
+.check,.statusChoices label{background:#32434c!important;border-color:#465963!important;color:#e8eef1}
+.sectionTitle{border-color:#465963}
+.overlay{background:#10181dcc}
+.modal{background:#26343c;color:#e8eef1}
+.modal .field input,.modal .field textarea,.modal .field select{background:#32434c!important;color:#e8eef1!important;border-color:#526771!important}
+.infoCard,.parentCard,.v10Info,.v10Parent{background:#32434c;border-color:#465963}
+.v10Avatar{background:#28413f;color:#9ee4da}
+.phone{color:#7dd3c7}
+.mobilebar{border-color:#465963}
+.mobilebar button{color:#b8c6cc}
+.mobilebar button.active{color:#7dd3c7}
+
+
+/* V24: letzte helle/weisse Flaechen an die dunkle Palette anpassen */
+.card,.person,.stat,.weekOuter,.weekgrid,.tableScroll,.dataTable,
+.modal,.infoCard,.parentCard,.v10Info,.v10Parent,
+input,textarea,select,.check,.statusChoices label,
+button.light,.notice,.tag,.authInfo{
+ background-color:#26343c!important;
+ color:#e8eef1!important;
+ border-color:#465963!important;
+}
+.weekHead,.dataTable th{
+ background:#32434c!important;
+ color:#d6e0e4!important;
+}
+.dataTable tr,.dataTable td,.weekgrid>div{
+ background:#26343c!important;
+ color:#e8eef1!important;
+}
+.dataTable tr:nth-child(even) td{
+ background:#2b3941!important;
+}
+.dataTable tr:hover td,.person:hover,.weekCell:hover,.weekName:hover{
+ background:#30464a!important;
+}
+input:focus,textarea:focus,select:focus{
+ background:#32434c!important;
+ color:#e8eef1!important;
+ outline:2px solid #5fc9bb55;
+ border-color:#5fc9bb!important;
+}
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator{
+ filter:invert(.9);
+}
+option{
+ background:#26343c;
+ color:#e8eef1;
+}
+button:not(.light):not(.red){
+ box-shadow:none;
+}
+.formfoot,.modalBody,.form{
+ background:#26343c!important;
+}
+.empty{
+ background:#26343c!important;
+ border-color:#465963!important;
+ color:#b8c6cc!important;
+}
+.timeline{
+ background:#26343c!important;
+ border-color:#465963!important;
+}
+.sidebar,.topbar,.mobilebar{
+ background:#202c33!important;
+}
+
+
+/* V25: Teal-Rahmen für Hauptbereiche */
+.panel{
+ border:1px solid var(--teal)!important;
+ box-shadow:0 0 0 1px #5fc9bb18;
+}
+.panelhead{
+ border-bottom:1px solid var(--teal)!important;
+}
+.panelhead h3{
+ color:var(--teal2)!important;
+}
+#dataTab .card,
+#dataTab .panel,
+#dataTab .tableScroll,
+#dataTab .dataTable{
+ border-color:var(--teal)!important;
+}
+#dataTab .tableScroll{
+ border:1px solid var(--teal)!important;
+ border-radius:12px;
+}
+#dataTab .dataTable th{
+ border-bottom:1px solid var(--teal)!important;
+}
+#dataTab .dataTable td{
+ border-bottom-color:#3f655f!important;
+}
+
+
+/* V26: weiße Hauptflächen vollständig an Dark/Teal-Design anpassen */
+.panel{
+ background:#26343c!important;
+ border:1px solid var(--teal)!important;
+ color:#e8eef1!important;
+}
+.panelhead{
+ background:#2b3b43!important;
+ color:#e8eef1!important;
+ border-bottom:1px solid var(--teal)!important;
+}
+.panelhead h3{
+ color:#7dd3c7!important;
+}
+.panelhead .date{
+ color:#b8c6cc!important;
+}
+.panelbody{
+ background:#26343c!important;
+ color:#e8eef1!important;
+}
+.weekOuter{
+ background:#26343c!important;
+ border-color:#465963!important;
+}
+.weekHint{
+ background:#26343c!important;
+ color:#91a4ad!important;
+}
 
 </style>
 </head>
@@ -124,6 +286,22 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 </div></div>
 <div class="field full"><label>INTEGRATION</label><div class="checkGroup"><label class="check"><input type="checkbox" id="f_integration"> Integration vorhanden</label></div></div>
 
+<div class="sectionTitle">🪪 Dauervollmachten / Heimweg</div>
+<div class="field full"><label>DAUERHAFT ABHOLBERECHTIGTE PERSONEN</label>
+<textarea id="f_permanentPickup" rows="3" placeholder="z. B. Oma Erika Müller&#10;Onkel Max Mustermann"></textarea>
+<div class="meta" style="margin-top:6px">Eine Person pro Zeile oder mehrere Namen frei eintragen. Diese Information wird im Wochenplaner angezeigt.</div>
+</div>
+<div class="field full"><label>WOCHENFELD – WIEDERKEHRENDE TAGESINFO</label>
+<div class="meta" style="margin-bottom:8px">Diese Angaben werden automatisch am jeweiligen Wochentag in Anwesenheit und Wochenplan angezeigt.</div>
+<div class="fields" style="padding:0">
+<div class="field"><label>MONTAG</label><input id="f_weekInfo_mon" placeholder="z. B. geht alleine um 15:30"></div>
+<div class="field"><label>DIENSTAG</label><input id="f_weekInfo_tue" placeholder="z. B. wird von Oma abgeholt"></div>
+<div class="field"><label>MITTWOCH</label><input id="f_weekInfo_wed"></div>
+<div class="field"><label>DONNERSTAG</label><input id="f_weekInfo_thu"></div>
+<div class="field full"><label>FREITAG</label><input id="f_weekInfo_fri"></div>
+</div>
+</div>
+
 <div class="sectionTitle">🚨 Notfallkontakte</div>
 <div class="contactPair"><div class="field"><label>NOTFALLKONTAKT 1 – NAME</label><input id="f_emergency1"></div><div class="field"><label>TELEFON</label><input id="f_emergency1phone" inputmode="tel"></div></div>
 <div class="contactPair"><div class="field"><label>NOTFALLKONTAKT 2 – NAME</label><input id="f_emergency2"></div><div class="field"><label>TELEFON</label><input id="f_emergency2phone" inputmode="tel"></div></div>
@@ -142,16 +320,20 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 <label><input type="radio" name="we_status" value="none"> Kein Eintrag</label>
 </div></div>
 <div class="field"><label>ANKUNFT</label><input id="we_arrival" type="time"></div><div class="field"><label>ABGANG</label><input id="we_departure" type="time"></div>
-<div class="field full"><label>ABHOLUNG / HEIMWEG</label>
-<div class="checkGroup" style="margin-bottom:8px">
-<button type="button" class="light" onclick="setPickup('Alleine')">Alleine</button>
-<button type="button" class="light" onclick="setPickup('Mutter')">Mutter</button>
-<button type="button" class="light" onclick="setPickup('Vater')">Vater</button>
-<button type="button" class="light" onclick="setPickup('Andere Person')">Andere Person</button>
+<div class="field full"><label>ABHOLUNG / HEIMWEG – AUSWAHL</label>
+<div class="checkGroup" id="pickupChoices" style="margin-bottom:8px">
+<button type="button" class="light pickupChoice" data-value="Alleine" onclick="setPickupType('Alleine')">Alleine</button>
+<button type="button" class="light pickupChoice" data-value="Mutter" onclick="setPickupType('Mutter')">Mutter</button>
+<button type="button" class="light pickupChoice" data-value="Vater" onclick="setPickupType('Vater')">Vater</button>
+<button type="button" class="light pickupChoice" data-value="Dauervollmacht" onclick="setPickupType('Dauervollmacht')">Dauervollmacht</button>
+<button type="button" class="light pickupChoice" data-value="Andere Person" onclick="setPickupType('Andere Person')">Andere Person</button>
+<button type="button" class="light pickupChoice" data-value="" onclick="setPickupType('')">Keine Auswahl</button>
 </div>
-<input id="we_pickup" placeholder="z. B. Oma, Onkel Max, alleine nach Hause">
-<div class="meta" style="margin-top:6px">Diese Angabe gilt nur für den ausgewählten Tag.</div>
+<input type="hidden" id="we_pickupType">
+<div class="meta">Die Auswahl bleibt getrennt von deiner eigenen Zusatzinfo.</div>
 </div>
+<div class="field full"><label>ZUSATZINFO</label><input id="we_pickupNote" placeholder="z. B. mit Oma, nach AG, Treffpunkt Tor"></div>
+<div class="field full"><div class="meta">Datum: <strong id="we_pickupDateLabel"></strong> · Die Angaben gelten nur für diesen Tag.</div></div>
 </div>
 <div class="formfoot"><button type="button" class="light" onclick="closeWeekEdit()">Abbrechen</button><button type="button" onclick="saveWeekEdit()">Speichern</button></div>
 </div></div></div>
@@ -169,6 +351,8 @@ const initials=p=>((p.first||" ")[0]+(p.last||" ")[0]).trim().toUpperCase()||"?"
 const rec=(p,d=todayKey())=>p.attendance?.[d];
 const fmtDate=d=>new Intl.DateTimeFormat("de-DE",{weekday:"short",day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date(d+"T12:00:00"));
 const shortDate=d=>new Intl.DateTimeFormat("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"}).format(new Date(d+"T12:00:00"));
+const weekInfoKey=d=>{let n=new Date(d+"T12:00:00").getDay();return ({1:"mon",2:"tue",3:"wed",4:"thu",5:"fri"})[n]||""};
+const recurringInfo=(p,d)=>{let k=weekInfoKey(d);return k?(p.weekInfo?.[k]||""):""};
 
 
 function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE))r.result.createObjectStore(STORE)};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
@@ -182,7 +366,12 @@ async function load(){
   S.persons.forEach(normalizePerson);
   renderAll();
 }
-function normalizePerson(p){p.attendance??={};p.allergies=p.allergies||"";p.parent1email=p.parent1email||"";p.parent2email=p.parent2email||"";p.modules=Array.isArray(p.modules)?p.modules:[];p.religion=!!p.religion;p.lebenskunde=!!p.lebenskunde;p.integration=!!p.integration}
+function normalizePerson(p){
+ p.attendance??={};p.allergies=p.allergies||"";p.parent1email=p.parent1email||"";p.parent2email=p.parent2email||"";
+ p.permanentPickup=p.permanentPickup||"";p.weekInfo=p.weekInfo&&typeof p.weekInfo==="object"?p.weekInfo:{mon:"",tue:"",wed:"",thu:"",fri:""};
+ Object.values(p.attendance).forEach(r=>{if(!r)return;if(r.pickup&&!r.pickupType&&!r.pickupNote){if(["Alleine","Mutter","Vater","Andere Person"].includes(r.pickup))r.pickupType=r.pickup;else r.pickupNote=r.pickup}r.pickupType=r.pickupType||"";r.pickupNote=r.pickupNote||""});
+ p.modules=Array.isArray(p.modules)?p.modules:[];p.religion=!!p.religion;p.lebenskunde=!!p.lebenskunde;p.integration=!!p.integration
+}
 async function persist(){
   try{await dbPut(S)}
   catch(e){
@@ -208,12 +397,12 @@ function renderPresence(){
  let entries=S.persons.map(p=>rec(p,d)).filter(Boolean).sort((a,b)=>(b.updated||0)-(a.updated||0));$("lastTime").textContent=entries[0]?.lastTime||entries[0]?.departure||entries[0]?.arrival||"—";
  $("peopleList").innerHTML=list.length?list.map(p=>{let r=rec(p,d),isOn=r?.status==="present";return `<div class="person">
  <div class="avatar">${esc(initials(p))}</div><div><div class="name click" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}</div>
- <div class="meta">${isOn?"Anwesend seit "+(r.arrival||"–"):r?.status==="absent"?"Abwesend"+(r.departure?" · Abgang "+r.departure:""):"Noch kein Eintrag heute"}${r?.pickup?" · Heimweg: "+esc(r.pickup):""}</div>
+ <div class="meta">${isOn?"Anwesend seit "+(r.arrival||"–"):r?.status==="absent"?"Abwesend"+(r.departure?" · Abgang "+r.departure:""):"Noch kein Eintrag heute"}${r?.pickupType?" · Heimweg: "+esc(r.pickupType):""}${r?.pickupNote?" · "+esc(r.pickupNote):""}${recurringInfo(p,d)?" · Wocheninfo: "+esc(recurringInfo(p,d)):""}</div>
  <div class="actions"><button class="light" onclick="openPersonDetails('${p.id}')">Kontaktdaten</button><button class="light" onclick="openWeekEdit('${p.id}',todayKey())">Abholung / Heimweg</button><button class="${isOn?"red":""}" onclick="toggleToday('${p.id}')">${isOn?"Abwesend":"Anwesend"}</button></div></div>
  <span class="badge ${isOn?"on":r?.status==="absent"?"off":"none"}">${isOn?"● Anwesend":r?.status==="absent"?"● Abwesend":"○ Offen"}</span>
  </div>`}).join(""):`<div class="empty">Keine Personen gefunden.</div>`;
  let acts=S.persons.map(p=>({p,r:rec(p,d)})).filter(x=>x.r).sort((a,b)=>(b.r.updated||0)-(a.r.updated||0));
- $("timeline").innerHTML=acts.length?acts.map(x=>`<div class="timeline"><div class="dot"></div><div><b>${esc(fullName(x.p))} · ${x.r.status==="present"?"anwesend":"abwesend"}</b><span>${x.r.arrival?"Ankunft "+x.r.arrival:""}${x.r.departure?" · Abgang "+x.r.departure:""}${x.r.pickup?" · Heimweg "+esc(x.r.pickup):""}</span></div></div>`).join(""):`<div class="empty">Heute noch keine Aktivitäten.</div>`
+ $("timeline").innerHTML=acts.length?acts.map(x=>`<div class="timeline"><div class="dot"></div><div><b>${esc(fullName(x.p))} · ${x.r.status==="present"?"anwesend":"abwesend"}</b><span>${x.r.arrival?"Ankunft "+x.r.arrival:""}${x.r.departure?" · Abgang "+x.r.departure:""}${x.r.pickupType?" · Heimweg "+esc(x.r.pickupType):""}${x.r.pickupNote?" · "+esc(x.r.pickupNote):""}${recurringInfo(x.p,d)?" · Wocheninfo "+esc(recurringInfo(x.p,d)):""}</span></div></div>`).join(""):`<div class="empty">Heute noch keine Aktivitäten.</div>`
 }
 async function toggleToday(pid){
  let p=S.persons.find(x=>x.id===pid);if(!p)return;
@@ -221,7 +410,7 @@ async function toggleToday(pid){
  if(r?.status==="present"){
    p.attendance[d]={...r,status:"absent",departure:t,updated:Date.now(),lastTime:t};
  }else{
-   p.attendance[d]={...r,status:"present",arrival:r?.arrival||t,departure:"",pickup:r?.pickup||"",updated:Date.now(),lastTime:t};
+   p.attendance[d]={...r,status:"present",arrival:t,departure:"",pickupType:r?.pickupType||"",pickupNote:r?.pickupNote||"",updated:Date.now(),lastTime:t};
  }
  await persist();renderAll()
 }
@@ -229,52 +418,59 @@ async function toggleToday(pid){
 function mondayOfWeek(){
  let d=new Date();d.setHours(12,0,0,0);let n=d.getDay(),diff=n===0?-6:1-n;d.setDate(d.getDate()+diff+weekOffset);return d
 }
-function weekDates(){let mon=mondayOfWeek();return Array.from({length:7},(_,i)=>{let x=new Date(mon);x.setDate(mon.getDate()+i);return localDateKey(x)})}
+function weekDates(){let mon=mondayOfWeek();return Array.from({length:5},(_,i)=>{let x=new Date(mon);x.setDate(mon.getDate()+i);return localDateKey(x)})}
 function moveWeek(n){weekOffset=n===0?0:weekOffset+n;renderWeek()}
 function renderWeek(){
- let ds=weekDates();$("weekTitle").textContent=`Woche ${shortDate(ds[0])} – ${shortDate(ds[6])}`;
+ let ds=weekDates();$("weekTitle").textContent=`Woche ${shortDate(ds[0])} – ${shortDate(ds[4])}`;
  if(!S.persons.length){$("weekContent").innerHTML='<div class="empty">Noch keine Personen angelegt.</div>';return}
  let h='<div class="weekOuter"><div class="weekgrid"><div class="weekHead">Name</div>';
  ds.forEach(d=>h+=`<div class="weekHead">${esc(shortDate(d))}</div>`);
  S.persons.forEach(p=>{
   h+=`<div class="weekName" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}<div class="meta">Kontaktdaten</div></div>`;
   ds.forEach(d=>{let r=rec(p,d),cl=r?.status==="present"?"on":r?.status==="absent"?"off":"none",tx=r?.status==="present"?"Anwesend":r?.status==="absent"?"Abwesend":"Nachtragen";
-   h+=`<div class="weekCell" onclick="openWeekEdit('${p.id}','${d}')"><span class="badge ${cl}">${tx}</span><div class="time">${r?.arrival?"An "+esc(r.arrival):""}${r?.departure?" · Ab "+esc(r.departure):""}${r?.pickup?" · "+esc(r.pickup):""}</div></div>`});
+   h+=`<div class="weekCell" onclick="openWeekEdit('${p.id}','${d}')"><span class="badge ${cl}">${tx}</span><div class="time">${r?.arrival?"An "+esc(r.arrival):""}${r?.departure?" · Ab "+esc(r.departure):""}${r?.pickupType?" · "+esc(r.pickupType):""}${r?.pickupNote?" · "+esc(r.pickupNote):""}${recurringInfo(p,d)?" · DV: "+esc(recurringInfo(p,d)):""}</div></div>`});
  });h+='</div></div><div class="weekHint">Tipp: Eine Tageszelle antippen, um einen vergessenen Eintrag rückwirkend anzulegen oder zu ändern.</div>';$("weekContent").innerHTML=h
 }
 function openWeekEdit(pid,date){
  let p=S.persons.find(x=>x.id===pid);if(!p)return;let r=rec(p,date);
  $("we_pid").value=pid;$("we_date").value=date;$("weekEditSubtitle").textContent=`${fullName(p)} · ${fmtDate(date)}`;
  let st=r?.status||"none";document.querySelectorAll('input[name="we_status"]').forEach(x=>x.checked=x.value===st);
- $("we_arrival").value=r?.arrival||"";$("we_departure").value=r?.departure||"";$("we_pickup").value=r?.pickup||"";$("weekEditOverlay").classList.remove("hidden")
+ $("we_arrival").value=r?.arrival||"";$("we_departure").value=r?.departure||"";
+ setPickupType(r?.pickupType||"");$("we_pickupNote").value=r?.pickupNote||"";$("we_pickupDateLabel").textContent=fmtDate(date);
+ $("weekEditOverlay").classList.remove("hidden")
 }
 function closeWeekEdit(){$("weekEditOverlay").classList.add("hidden")}
-function setPickup(value){$("we_pickup").value=value}
+function setPickupType(value){
+ $("we_pickupType").value=value;
+ document.querySelectorAll(".pickupChoice").forEach(b=>b.classList.toggle("active",b.dataset.value===value))
+}
 async function saveWeekEdit(){
  let pid=$("we_pid").value,date=$("we_date").value,p=S.persons.find(x=>x.id===pid);if(!p)return;
  let status=document.querySelector('input[name="we_status"]:checked')?.value||"none";
  if(status==="none")delete p.attendance[date];
- else p.attendance[date]={status,arrival:$("we_arrival").value,departure:$("we_departure").value,pickup:$("we_pickup").value.trim(),updated:Date.now(),lastTime:now()};
+ else p.attendance[date]={status,arrival:$("we_arrival").value,departure:$("we_departure").value,pickupType:$("we_pickupType").value,pickupNote:$("we_pickupNote").value.trim(),updated:Date.now(),lastTime:now()};
  await persist();closeWeekEdit();renderAll()
 }
 
 function openNew(){
- fillForm({id:makeId(),first:"",last:"",birth:"",address:"",city:"",notes:"",allergies:"",parent1:"",parent1phone:"",parent1email:"",parent2:"",parent2phone:"",parent2email:"",religion:false,lebenskunde:false,modules:[],integration:false,emergency1:"",emergency1phone:"",emergency2:"",emergency2phone:"",moreNotes:"",attendance:{}},true)
+ fillForm({id:makeId(),first:"",last:"",birth:"",address:"",city:"",notes:"",allergies:"",parent1:"",parent1phone:"",parent1email:"",parent2:"",parent2phone:"",parent2email:"",religion:false,lebenskunde:false,modules:[],integration:false,emergency1:"",emergency1phone:"",emergency2:"",emergency2phone:"",moreNotes:"",permanentPickup:"",weekInfo:{mon:"",tue:"",wed:"",thu:"",fri:""},attendance:{}},true)
 }
 function editPerson(pid){let p=S.persons.find(x=>x.id===pid);if(p){closePersonOverlay();fillForm(p,false)}}
 function fillForm(p,isNew){
  $("formTitle").textContent=isNew?"Person hinzufügen":"Person bearbeiten";$("deleteBtn").classList.toggle("hidden",isNew);
- ["id","first","last","birth","address","city","notes","allergies","parent1","parent1phone","parent1email","parent2","parent2phone","parent2email","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>$("f_"+k).value=p[k]||"");
+ ["id","first","last","birth","address","city","notes","allergies","parent1","parent1phone","parent1email","parent2","parent2phone","parent2email","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes","permanentPickup"].forEach(k=>$("f_"+k).value=p[k]||"");
  $("f_religion").checked=!!p.religion;$("f_lebenskunde").checked=!!p.lebenskunde;$("f_integration").checked=!!p.integration;
  document.querySelectorAll(".module").forEach(x=>x.checked=(p.modules||[]).includes(x.value));
+ ["mon","tue","wed","thu","fri"].forEach(k=>$("f_weekInfo_"+k).value=p.weekInfo?.[k]||"");
  $("personFormOverlay").classList.remove("hidden")
 }
 function closePersonForm(){$("personFormOverlay").classList.add("hidden")}
 async function savePerson(){
  let id=$("f_id").value,p=S.persons.find(x=>x.id===id);if(!p){p={id,attendance:{}};S.persons.push(p)}
- ["first","last","birth","address","city","notes","allergies","parent1","parent1phone","parent1email","parent2","parent2phone","parent2email","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>p[k]=$("f_"+k).value.trim());
+ ["first","last","birth","address","city","notes","allergies","parent1","parent1phone","parent1email","parent2","parent2phone","parent2email","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes","permanentPickup"].forEach(k=>p[k]=$("f_"+k).value.trim());
  if(!p.first&&!p.last){alert("Bitte mindestens einen Namen eingeben.");return}
- p.religion=$("f_religion").checked;p.lebenskunde=$("f_lebenskunde").checked;p.integration=$("f_integration").checked;p.modules=[...document.querySelectorAll(".module:checked")].map(x=>x.value);p.attendance??={};
+ p.religion=$("f_religion").checked;p.lebenskunde=$("f_lebenskunde").checked;p.integration=$("f_integration").checked;
+ p.weekInfo={};["mon","tue","wed","thu","fri"].forEach(k=>p.weekInfo[k]=$("f_weekInfo_"+k).value.trim());p.modules=[...document.querySelectorAll(".module:checked")].map(x=>x.value);p.attendance??={};
  await persist();closePersonForm();renderAll()
 }
 async function deleteCurrent(){let id=$("f_id").value;if(!confirm("Person wirklich löschen?"))return;S.persons=S.persons.filter(p=>p.id!==id);await persist();closePersonForm();renderAll()}
@@ -299,6 +495,10 @@ function openPersonDetails(pid){
  <div class="v10Section"><h3>Persönliche Daten</h3><div class="v10Grid">${info("Geburtsdatum",p.birth)}${info("Adresse",p.address)}${info("PLZ / Ort",p.city)}${info("Allergien / Unverträglichkeiten",p.allergies)}${info("Notiz",p.notes)}</div></div>
  <div class="v10Section"><h3>Eltern / Erziehungsberechtigte</h3><div class="v10Parents">${contact("Elternteil 1",p.parent1,p.parent1phone,p.parent1email)}${contact("Elternteil 2",p.parent2,p.parent2phone,p.parent2email)}</div></div>
  <div class="v10Section"><h3>Betreuung / Vertrag</h3><div class="v10Grid">${info("Religion",p.religion?"Ja":"Nein")}${info("Lebenskunde",p.lebenskunde?"Ja":"Nein")}${info("Vertragsmodule",(p.modules||[]).join(", ")||"–")}${info("Integration",p.integration?"Ja":"Nein")}</div></div>
+ <div class="v10Split">
+ <div class="v10Section"><h3>Dauervollmachten</h3><div class="v10Grid" style="grid-template-columns:1fr">${info("Abholberechtigte Personen",p.permanentPickup)}</div></div>
+ <div class="v10Section"><h3>Wocheninfo</h3><div class="v10Grid" style="grid-template-columns:1fr">${info("Montag",p.weekInfo?.mon)}${info("Dienstag",p.weekInfo?.tue)}${info("Mittwoch",p.weekInfo?.wed)}${info("Donnerstag",p.weekInfo?.thu)}${info("Freitag",p.weekInfo?.fri)}</div></div>
+ </div>
  <div class="v10Section"><h3>Notfallkontakte</h3><div class="v10Parents">${contact("Notfallkontakt 1",p.emergency1,p.emergency1phone)}${contact("Notfallkontakt 2",p.emergency2,p.emergency2phone)}</div></div>
  ${p.moreNotes?`<div class="v10Section"><h3>Weitere Notizen</h3>${info("Notizen",p.moreNotes)}</div>`:""}
  <div class="v10Footer"><button class="light" onclick="closePersonOverlay()">Schließen</button><button onclick="editPerson('${p.id}')">Person bearbeiten</button></div>`;
