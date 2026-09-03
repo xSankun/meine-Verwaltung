@@ -1,4 +1,4 @@
-const CACHE="meine-verwaltung-v16-static-v1";
+const CACHE="meine-verwaltung-v19-static-v1";
 const ASSETS=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

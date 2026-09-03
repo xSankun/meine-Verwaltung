@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f766e"><meta name="description" content="Private lokale Anwesenheitsverwaltung">
 <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png">
-<title>Meine Verwaltung V16 Offline</title>
+<title>Meine Verwaltung V19 Offline</title>
 <style>
 :root{--teal:#0f766e;--teal2:#115e59;--bg:#f5f7f8;--card:#fff;--text:#17202a;--muted:#64748b;--line:#e2e8f0;--green:#16a34a;--red:#dc2626;--amber:#b45309}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
@@ -102,10 +102,13 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 <div class="field"><label>VORNAME *</label><input id="f_first"></div><div class="field"><label>NACHNAME *</label><input id="f_last"></div>
 <div class="field"><label>GEBURTSDATUM</label><input id="f_birth" type="date"></div><div class="field"><label>ADRESSE</label><input id="f_address"></div>
 <div class="field"><label>PLZ / ORT</label><input id="f_city"></div><div class="field"><label>KURZE NOTIZ</label><input id="f_notes"></div>
+<div class="field full"><label>ALLERGIEN / UNVERTRÄGLICHKEITEN</label><textarea id="f_allergies" rows="2" placeholder="z. B. Erdnüsse, Laktose, Penicillin …"></textarea></div>
 
 <div class="sectionTitle">Eltern / Erziehungsberechtigte</div>
 <div class="contactPair"><div class="field"><label>ELTERNTEIL 1 – NAME</label><input id="f_parent1"></div><div class="field"><label>TELEFON ELTERNTEIL 1</label><input id="f_parent1phone" inputmode="tel"></div></div>
+<div class="field full"><label>E-MAIL ELTERNTEIL 1</label><input id="f_parent1email" type="email" inputmode="email" autocomplete="off"></div>
 <div class="contactPair"><div class="field"><label>ELTERNTEIL 2 – NAME</label><input id="f_parent2"></div><div class="field"><label>TELEFON ELTERNTEIL 2</label><input id="f_parent2phone" inputmode="tel"></div></div>
+<div class="field full"><label>E-MAIL ELTERNTEIL 2</label><input id="f_parent2email" type="email" inputmode="email" autocomplete="off"></div>
 
 <div class="sectionTitle">Betreuung / Unterricht</div>
 <div class="field full"><label>RELIGION / LEBENSKUNDE</label><div class="checkGroup">
@@ -139,6 +142,16 @@ button{border:0;border-radius:9px;padding:10px 14px;font:inherit;cursor:pointer;
 <label><input type="radio" name="we_status" value="none"> Kein Eintrag</label>
 </div></div>
 <div class="field"><label>ANKUNFT</label><input id="we_arrival" type="time"></div><div class="field"><label>ABGANG</label><input id="we_departure" type="time"></div>
+<div class="field full"><label>ABHOLUNG / HEIMWEG</label>
+<div class="checkGroup" style="margin-bottom:8px">
+<button type="button" class="light" onclick="setPickup('Alleine')">Alleine</button>
+<button type="button" class="light" onclick="setPickup('Mutter')">Mutter</button>
+<button type="button" class="light" onclick="setPickup('Vater')">Vater</button>
+<button type="button" class="light" onclick="setPickup('Andere Person')">Andere Person</button>
+</div>
+<input id="we_pickup" placeholder="z. B. Oma, Onkel Max, alleine nach Hause">
+<div class="meta" style="margin-top:6px">Diese Angabe gilt nur für den ausgewählten Tag.</div>
+</div>
 </div>
 <div class="formfoot"><button type="button" class="light" onclick="closeWeekEdit()">Abbrechen</button><button type="button" onclick="saveWeekEdit()">Speichern</button></div>
 </div></div></div>
@@ -169,7 +182,7 @@ async function load(){
   S.persons.forEach(normalizePerson);
   renderAll();
 }
-function normalizePerson(p){p.attendance??={};p.modules=Array.isArray(p.modules)?p.modules:[];p.religion=!!p.religion;p.lebenskunde=!!p.lebenskunde;p.integration=!!p.integration}
+function normalizePerson(p){p.attendance??={};p.allergies=p.allergies||"";p.parent1email=p.parent1email||"";p.parent2email=p.parent2email||"";p.modules=Array.isArray(p.modules)?p.modules:[];p.religion=!!p.religion;p.lebenskunde=!!p.lebenskunde;p.integration=!!p.integration}
 async function persist(){
   try{await dbPut(S)}
   catch(e){
@@ -195,12 +208,12 @@ function renderPresence(){
  let entries=S.persons.map(p=>rec(p,d)).filter(Boolean).sort((a,b)=>(b.updated||0)-(a.updated||0));$("lastTime").textContent=entries[0]?.lastTime||entries[0]?.departure||entries[0]?.arrival||"—";
  $("peopleList").innerHTML=list.length?list.map(p=>{let r=rec(p,d),isOn=r?.status==="present";return `<div class="person">
  <div class="avatar">${esc(initials(p))}</div><div><div class="name click" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}</div>
- <div class="meta">${isOn?"Anwesend seit "+(r.arrival||"–"):r?.status==="absent"?"Abwesend"+(r.departure?" · Abgang "+r.departure:""):"Noch kein Eintrag heute"}</div>
- <div class="actions"><button class="light" onclick="openPersonDetails('${p.id}')">Kontaktdaten</button><button class="${isOn?"red":""}" onclick="toggleToday('${p.id}')">${isOn?"Abwesend":"Anwesend"}</button></div></div>
+ <div class="meta">${isOn?"Anwesend seit "+(r.arrival||"–"):r?.status==="absent"?"Abwesend"+(r.departure?" · Abgang "+r.departure:""):"Noch kein Eintrag heute"}${r?.pickup?" · Heimweg: "+esc(r.pickup):""}</div>
+ <div class="actions"><button class="light" onclick="openPersonDetails('${p.id}')">Kontaktdaten</button><button class="light" onclick="openWeekEdit('${p.id}',todayKey())">Abholung / Heimweg</button><button class="${isOn?"red":""}" onclick="toggleToday('${p.id}')">${isOn?"Abwesend":"Anwesend"}</button></div></div>
  <span class="badge ${isOn?"on":r?.status==="absent"?"off":"none"}">${isOn?"● Anwesend":r?.status==="absent"?"● Abwesend":"○ Offen"}</span>
  </div>`}).join(""):`<div class="empty">Keine Personen gefunden.</div>`;
  let acts=S.persons.map(p=>({p,r:rec(p,d)})).filter(x=>x.r).sort((a,b)=>(b.r.updated||0)-(a.r.updated||0));
- $("timeline").innerHTML=acts.length?acts.map(x=>`<div class="timeline"><div class="dot"></div><div><b>${esc(fullName(x.p))} · ${x.r.status==="present"?"anwesend":"abwesend"}</b><span>${x.r.arrival?"Ankunft "+x.r.arrival:""}${x.r.departure?" · Abgang "+x.r.departure:""}</span></div></div>`).join(""):`<div class="empty">Heute noch keine Aktivitäten.</div>`
+ $("timeline").innerHTML=acts.length?acts.map(x=>`<div class="timeline"><div class="dot"></div><div><b>${esc(fullName(x.p))} · ${x.r.status==="present"?"anwesend":"abwesend"}</b><span>${x.r.arrival?"Ankunft "+x.r.arrival:""}${x.r.departure?" · Abgang "+x.r.departure:""}${x.r.pickup?" · Heimweg "+esc(x.r.pickup):""}</span></div></div>`).join(""):`<div class="empty">Heute noch keine Aktivitäten.</div>`
 }
 async function toggleToday(pid){
  let p=S.persons.find(x=>x.id===pid);if(!p)return;
@@ -208,7 +221,7 @@ async function toggleToday(pid){
  if(r?.status==="present"){
    p.attendance[d]={...r,status:"absent",departure:t,updated:Date.now(),lastTime:t};
  }else{
-   p.attendance[d]={status:"present",arrival:t,departure:"",updated:Date.now(),lastTime:t};
+   p.attendance[d]={...r,status:"present",arrival:r?.arrival||t,departure:"",pickup:r?.pickup||"",updated:Date.now(),lastTime:t};
  }
  await persist();renderAll()
 }
@@ -226,31 +239,32 @@ function renderWeek(){
  S.persons.forEach(p=>{
   h+=`<div class="weekName" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}<div class="meta">Kontaktdaten</div></div>`;
   ds.forEach(d=>{let r=rec(p,d),cl=r?.status==="present"?"on":r?.status==="absent"?"off":"none",tx=r?.status==="present"?"Anwesend":r?.status==="absent"?"Abwesend":"Nachtragen";
-   h+=`<div class="weekCell" onclick="openWeekEdit('${p.id}','${d}')"><span class="badge ${cl}">${tx}</span><div class="time">${r?.arrival?"An "+esc(r.arrival):""}${r?.departure?" · Ab "+esc(r.departure):""}</div></div>`});
+   h+=`<div class="weekCell" onclick="openWeekEdit('${p.id}','${d}')"><span class="badge ${cl}">${tx}</span><div class="time">${r?.arrival?"An "+esc(r.arrival):""}${r?.departure?" · Ab "+esc(r.departure):""}${r?.pickup?" · "+esc(r.pickup):""}</div></div>`});
  });h+='</div></div><div class="weekHint">Tipp: Eine Tageszelle antippen, um einen vergessenen Eintrag rückwirkend anzulegen oder zu ändern.</div>';$("weekContent").innerHTML=h
 }
 function openWeekEdit(pid,date){
  let p=S.persons.find(x=>x.id===pid);if(!p)return;let r=rec(p,date);
  $("we_pid").value=pid;$("we_date").value=date;$("weekEditSubtitle").textContent=`${fullName(p)} · ${fmtDate(date)}`;
  let st=r?.status||"none";document.querySelectorAll('input[name="we_status"]').forEach(x=>x.checked=x.value===st);
- $("we_arrival").value=r?.arrival||"";$("we_departure").value=r?.departure||"";$("weekEditOverlay").classList.remove("hidden")
+ $("we_arrival").value=r?.arrival||"";$("we_departure").value=r?.departure||"";$("we_pickup").value=r?.pickup||"";$("weekEditOverlay").classList.remove("hidden")
 }
 function closeWeekEdit(){$("weekEditOverlay").classList.add("hidden")}
+function setPickup(value){$("we_pickup").value=value}
 async function saveWeekEdit(){
  let pid=$("we_pid").value,date=$("we_date").value,p=S.persons.find(x=>x.id===pid);if(!p)return;
  let status=document.querySelector('input[name="we_status"]:checked')?.value||"none";
  if(status==="none")delete p.attendance[date];
- else p.attendance[date]={status,arrival:$("we_arrival").value,departure:$("we_departure").value,updated:Date.now(),lastTime:now()};
+ else p.attendance[date]={status,arrival:$("we_arrival").value,departure:$("we_departure").value,pickup:$("we_pickup").value.trim(),updated:Date.now(),lastTime:now()};
  await persist();closeWeekEdit();renderAll()
 }
 
 function openNew(){
- fillForm({id:makeId(),first:"",last:"",birth:"",address:"",city:"",notes:"",parent1:"",parent1phone:"",parent2:"",parent2phone:"",religion:false,lebenskunde:false,modules:[],integration:false,emergency1:"",emergency1phone:"",emergency2:"",emergency2phone:"",moreNotes:"",attendance:{}},true)
+ fillForm({id:makeId(),first:"",last:"",birth:"",address:"",city:"",notes:"",allergies:"",parent1:"",parent1phone:"",parent1email:"",parent2:"",parent2phone:"",parent2email:"",religion:false,lebenskunde:false,modules:[],integration:false,emergency1:"",emergency1phone:"",emergency2:"",emergency2phone:"",moreNotes:"",attendance:{}},true)
 }
 function editPerson(pid){let p=S.persons.find(x=>x.id===pid);if(p){closePersonOverlay();fillForm(p,false)}}
 function fillForm(p,isNew){
  $("formTitle").textContent=isNew?"Person hinzufügen":"Person bearbeiten";$("deleteBtn").classList.toggle("hidden",isNew);
- ["id","first","last","birth","address","city","notes","parent1","parent1phone","parent2","parent2phone","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>$("f_"+k).value=p[k]||"");
+ ["id","first","last","birth","address","city","notes","allergies","parent1","parent1phone","parent1email","parent2","parent2phone","parent2email","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>$("f_"+k).value=p[k]||"");
  $("f_religion").checked=!!p.religion;$("f_lebenskunde").checked=!!p.lebenskunde;$("f_integration").checked=!!p.integration;
  document.querySelectorAll(".module").forEach(x=>x.checked=(p.modules||[]).includes(x.value));
  $("personFormOverlay").classList.remove("hidden")
@@ -258,7 +272,7 @@ function fillForm(p,isNew){
 function closePersonForm(){$("personFormOverlay").classList.add("hidden")}
 async function savePerson(){
  let id=$("f_id").value,p=S.persons.find(x=>x.id===id);if(!p){p={id,attendance:{}};S.persons.push(p)}
- ["first","last","birth","address","city","notes","parent1","parent1phone","parent2","parent2phone","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>p[k]=$("f_"+k).value.trim());
+ ["first","last","birth","address","city","notes","allergies","parent1","parent1phone","parent1email","parent2","parent2phone","parent2email","emergency1","emergency1phone","emergency2","emergency2phone","moreNotes"].forEach(k=>p[k]=$("f_"+k).value.trim());
  if(!p.first&&!p.last){alert("Bitte mindestens einen Namen eingeben.");return}
  p.religion=$("f_religion").checked;p.lebenskunde=$("f_lebenskunde").checked;p.integration=$("f_integration").checked;p.modules=[...document.querySelectorAll(".module:checked")].map(x=>x.value);p.attendance??={};
  await persist();closePersonForm();renderAll()
@@ -270,20 +284,20 @@ function tagsFor(p){
 }
 function renderData(){
  $("dataContent").innerHTML=S.persons.length?`<div class="tableScroll"><table class="dataTable"><thead><tr><th>Name</th><th>Elternteil 1</th><th>Telefon 1</th><th>Elternteil 2</th><th>Telefon 2</th><th>Betreuung / Vertrag</th><th></th></tr></thead><tbody>
- ${S.persons.map(p=>`<tr><td><b class="name click" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}</b></td><td>${esc(p.parent1||"–")}</td><td>${esc(p.parent1phone||"–")}</td><td>${esc(p.parent2||"–")}</td><td>${esc(p.parent2phone||"–")}</td><td>${tagsFor(p).map(t=>`<span class="tag">${esc(t)}</span>`).join("")||"–"}</td><td><button class="light" onclick="editPerson('${p.id}')">Bearbeiten</button></td></tr>`).join("")}
+ ${S.persons.map(p=>`<tr><td><b class="name click" onclick="openPersonDetails('${p.id}')">${esc(fullName(p))}</b></td><td>${esc(p.parent1||"–")}${p.parent1email?`<div class="meta">${esc(p.parent1email)}</div>`:""}</td><td>${esc(p.parent1phone||"–")}</td><td>${esc(p.parent2||"–")}${p.parent2email?`<div class="meta">${esc(p.parent2email)}</div>`:""}</td><td>${esc(p.parent2phone||"–")}</td><td>${tagsFor(p).map(t=>`<span class="tag">${esc(t)}</span>`).join("")||"–"}</td><td><button class="light" onclick="editPerson('${p.id}')">Bearbeiten</button></td></tr>`).join("")}
  </tbody></table></div>`:`<div class="empty">Noch keine Personen angelegt.</div>`
 }
 function openPersonDetails(pid){
  let p=S.persons.find(x=>x.id===pid);if(!p)return;
  const info=(l,v)=>`<div class="v10Info"><div class="k">${l}</div><div class="v">${esc(v||"–")}</div></div>`;
- const contact=(title,name,phone)=>`<div class="v10Parent"><strong>${title}</strong><div>${esc(name||"–")}</div>${phone?`<a class="phone" href="tel:${esc(phone)}">☎ ${esc(phone)}</a>`:'<div class="meta">Keine Telefonnummer hinterlegt</div>'}</div>`;
+ const contact=(title,name,phone,email)=>`<div class="v10Parent"><strong>${title}</strong><div>${esc(name||"–")}</div>${phone?`<a class="phone" href="tel:${esc(phone)}">☎ ${esc(phone)}</a>`:'<div class="meta">Keine Telefonnummer hinterlegt</div>'}${email?`<div><a class="phone" href="mailto:${esc(email)}">✉ ${esc(email)}</a></div>`:'<div class="meta">Keine E-Mail hinterlegt</div>'}</div>`;
  let tags=tagsFor(p);
  $("personDetails").innerHTML=`<div class="v10Head">
    <div class="v10Hero"><div class="v10Avatar">${esc(initials(p))}</div><div><h2 style="margin:0">${esc(fullName(p))}</h2><div class="date">Kontaktdaten & Personendaten</div></div></div>
    <button class="light" onclick="closePersonOverlay()">Schließen</button>
  </div>
- <div class="v10Section"><h3>Persönliche Daten</h3><div class="v10Grid">${info("Geburtsdatum",p.birth)}${info("Adresse",p.address)}${info("PLZ / Ort",p.city)}${info("Notiz",p.notes)}</div></div>
- <div class="v10Section"><h3>Eltern / Erziehungsberechtigte</h3><div class="v10Parents">${contact("Elternteil 1",p.parent1,p.parent1phone)}${contact("Elternteil 2",p.parent2,p.parent2phone)}</div></div>
+ <div class="v10Section"><h3>Persönliche Daten</h3><div class="v10Grid">${info("Geburtsdatum",p.birth)}${info("Adresse",p.address)}${info("PLZ / Ort",p.city)}${info("Allergien / Unverträglichkeiten",p.allergies)}${info("Notiz",p.notes)}</div></div>
+ <div class="v10Section"><h3>Eltern / Erziehungsberechtigte</h3><div class="v10Parents">${contact("Elternteil 1",p.parent1,p.parent1phone,p.parent1email)}${contact("Elternteil 2",p.parent2,p.parent2phone,p.parent2email)}</div></div>
  <div class="v10Section"><h3>Betreuung / Vertrag</h3><div class="v10Grid">${info("Religion",p.religion?"Ja":"Nein")}${info("Lebenskunde",p.lebenskunde?"Ja":"Nein")}${info("Vertragsmodule",(p.modules||[]).join(", ")||"–")}${info("Integration",p.integration?"Ja":"Nein")}</div></div>
  <div class="v10Section"><h3>Notfallkontakte</h3><div class="v10Parents">${contact("Notfallkontakt 1",p.emergency1,p.emergency1phone)}${contact("Notfallkontakt 2",p.emergency2,p.emergency2phone)}</div></div>
  ${p.moreNotes?`<div class="v10Section"><h3>Weitere Notizen</h3>${info("Notizen",p.moreNotes)}</div>`:""}
